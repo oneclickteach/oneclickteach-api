@@ -4,7 +4,6 @@ import * as Joi from 'joi';
 import { LoggerModule } from './shared/logger';
 import { HealthModule } from './shared/health';
 import { AuthModule } from './modules/auth/auth.module';
-import { UsersModule } from './modules/users/users.module';
 import { SettingsModule } from './modules/settings/settings.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { redisStore } from 'cache-manager-redis-yet';
@@ -37,9 +36,8 @@ import { redisStore } from 'cache-manager-redis-yet';
       inject: [ConfigService],
     }),
     HealthModule,
-    SettingsModule,
-    UsersModule,
     AuthModule,
+    SettingsModule,
   ],
 })
 export class AppModule { }

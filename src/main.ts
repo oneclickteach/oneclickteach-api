@@ -19,7 +19,6 @@ async function bootstrap() {
   )
   .addTag('Health')
   .addTag('Auth')
-  .addTag('Users')
   .addTag('Settings')
   .build();
 
