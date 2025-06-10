@@ -12,15 +12,15 @@ export class DatabaseModule {
         TypeOrmModule.forRootAsync({
           useFactory: (configService: ConfigService) => ({
             type: 'postgres',
-            host: configService.getOrThrow('POSTGRES_HOST'),
-            port: configService.getOrThrow('POSTGRES_PORT'),
-            database: configService.getOrThrow('POSTGRES_DATABASE'),
-            username: configService.getOrThrow('POSTGRES_USERNAME'),
-            password: configService.getOrThrow('POSTGRES_PASSWORD'),
+            host: configService.getOrThrow('DATABASE_HOST'),
+            port: configService.getOrThrow('DATABASE_PORT'),
+            database: configService.getOrThrow('DATABASE_NAME'),
+            username: configService.getOrThrow('DATABASE_USER'),
+            password: configService.getOrThrow('DATABASE_PASSWORD'),
             synchronize:
-              configService.getOrThrow('POSTGRES_SYNCHRONIZE') === 'true',
-            autoLoadEntities: configService.getOrThrow(
-              'POSTGRES_AUTO_LOAD_ENTITIES',
+              configService.getOrThrow<boolean>('DATABASE_SYNCHRONIZE', true),
+            autoLoadEntities: configService.getOrThrow<boolean>(
+              'DATABASE_AUTO_LOAD_ENTITIES',
               true,
             ),
           }),
@@ -42,15 +42,15 @@ export class DatabaseModule {
             const { database } = await options.useFactory(configService);
             return {
               type: 'postgres',
-              host: configService.getOrThrow('POSTGRES_HOST'),
-              port: configService.getOrThrow('POSTGRES_PORT'),
+              host: configService.getOrThrow('DATABASE_HOST'),
+              port: configService.getOrThrow('DATABASE_PORT'),
               database: database,
-              username: configService.getOrThrow('POSTGRES_USERNAME'),
-              password: configService.getOrThrow('POSTGRES_PASSWORD'),
+              username: configService.getOrThrow('DATABASE_USER'),
+              password: configService.getOrThrow('DATABASE_PASSWORD'),
               synchronize:
-                configService.getOrThrow('POSTGRES_SYNCHRONIZE') === 'true',
-              autoLoadEntities: configService.getOrThrow(
-                'POSTGRES_AUTO_LOAD_ENTITIES',
+                configService.getOrThrow<boolean>('DATABASE_SYNCHRONIZE', true),
+              autoLoadEntities: configService.getOrThrow<boolean>(
+                'DATABASE_AUTO_LOAD_ENTITIES',
                 true,
               ),
             };

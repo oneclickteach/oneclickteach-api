@@ -37,6 +37,7 @@ services:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-scripts:/docker-entrypoint-initdb.d # Mount seed data
     restart: unless-stopped
 
 volumes:
