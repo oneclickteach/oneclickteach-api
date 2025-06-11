@@ -1,11 +1,12 @@
-import { Controller, Post, UseGuards, Body, Request } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Request, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from 'src/common/guards';
+import { JwtAuthGuard, LocalAuthGuard } from 'src/common/guards';
 import { SignupDto } from './dto/signup.dto';
 import { LoginDto } from './dto/login.dto';
-import { Serialize } from 'src/common';
+import { CurrentUser, Serialize, UserInterface } from 'src/common';
 import { AuthDto } from './dto/auth.dto';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -28,5 +29,17 @@ export class AuthController {
   })
   async login(@Body() _loginDto: LoginDto, @Request() req) {
     return this.authService.login(req.user);
+  }
+
+  @Get('profile')
+  @UseGuards(JwtAuthGuard)
+  @Serialize(GetUserDto)
+  @ApiTags('protected')
+  @ApiBearerAuth('access_token')
+  @ApiOkResponse({
+    type: GetUserDto,
+  })
+  async getUserProfile(@CurrentUser() user: UserInterface) {
+    return this.authService.getProfile(user.id);
   }
 }

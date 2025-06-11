@@ -1,9 +1,10 @@
 import { AbstractEntity } from 'src/shared/database';
 import { Entity, Column } from 'typeorm';
 import { Gender, UserRole } from 'src/common/enums/user.enum';
+import { UserInterface } from 'src/common';
 
 @Entity('users')
-export class User extends AbstractEntity<User> {
+export class User extends AbstractEntity<User> implements UserInterface {
   @Column({ unique: true })
   email: string;
 

@@ -17,6 +17,14 @@ async function bootstrap() {
       `${configService.getOrThrow<string>('SWAGGER_SERVER_HOST')}`,
       'Server',
     )
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'access_token',
+    )
     .addTag('Health')
     .addTag('Auth')
     .addTag('Users')

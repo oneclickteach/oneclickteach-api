@@ -3,9 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { compareHash, createHash } from 'src/utils/hash.utils';
 import { SignupDto } from './dto/signup.dto';
-import { TokenPayload } from './interfaces/token-payload.interface';
+import { TokenPayloadInterface } from './interfaces/token-payload.interface';
 import { ConfigService } from '@nestjs/config';
 import { UserRole } from 'src/common/enums/user.enum';
+import { UserInterface } from 'src/common';
 
 @Injectable()
 export class AuthService {
@@ -33,9 +34,17 @@ export class AuthService {
     return this.login(user);
   }
 
-  async login(user: any) {
-    const access_token = await this.authenticate(user.id, user.email, user.user_role);
+  async login(user: UserInterface) {
+    const access_token = await this.authenticate(user.id, user.user_role);
     return { access_token, user };
+  }
+
+  async getProfile({ id }: UserInterface) {
+    const user = await this.usersService.findOne({ id });
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+    return user;
   }
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -58,10 +67,9 @@ export class AuthService {
     }
   }
 
-  private async authenticate(user_id: string, user_email: string, user_role: string): Promise<string> {
-    const tokenPayload: TokenPayload = {
-      user_id,
-      user_email,
+  private async authenticate(id: string, user_role: string): Promise<string> {
+    const tokenPayloadInterface: TokenPayloadInterface = {
+      id,
       user_role,
     };
 
@@ -69,7 +77,7 @@ export class AuthService {
     const expires = new Date();
     expires.setSeconds(expires.getSeconds() + expiration_in_seconds);
 
-    const token = this.jwtService.sign(tokenPayload, { expiresIn: expiration_in_seconds });
+    const token = this.jwtService.sign(tokenPayloadInterface, { expiresIn: expiration_in_seconds });
 
     return token;
   }
