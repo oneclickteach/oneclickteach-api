@@ -1,19 +1,22 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard, Serialize } from 'src/common';
+import { ApiOkPaginatedResponse, ApiPaginationQuery, Paginate, PaginateQuery } from 'nestjs-paginate';
+import { GetUserDto } from './dto/get-user.dto';
+import { USER_PAGINATION_CONFIG } from './pagination-config';
+import { ListUserDto } from './dto/list-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @UseGuards(JwtAuthGuard)
+  @Serialize(ListUserDto)
+  @ApiOkPaginatedResponse(GetUserDto, USER_PAGINATION_CONFIG)
+  @ApiPaginationQuery(USER_PAGINATION_CONFIG)
+  async findAll(@Paginate() query: PaginateQuery) {
+    return this.usersService.findAll(query);
   }
 
 

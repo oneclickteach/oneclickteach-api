@@ -1,6 +1,6 @@
 import { AbstractEntity } from 'src/shared/database';
 import { Entity, Column } from 'typeorm';
-import { Gender, UserRole } from '../enums/user.enum';
+import { Gender, UserRole } from 'src/common/enums/user.enum';
 
 @Entity('users')
 export class User extends AbstractEntity<User> {
@@ -9,6 +9,12 @@ export class User extends AbstractEntity<User> {
 
   @Column()
   email_is_verified: boolean;
+
+  @Column({ nullable: true })
+  mobile_phone?: string;
+
+  @Column({ default: false })
+  mobile_phone_is_verified: boolean;
 
   @Column()
   first_name: string;
@@ -22,12 +28,9 @@ export class User extends AbstractEntity<User> {
   @Column({ type: 'enum', enum: Gender, default: Gender.UNKNOWN })
   gender: Gender;
 
-  @Column({ nullable: true })
-  mobile_phone?: string;
-
-  @Column({ default: false })
-  mobile_phone_is_verified: boolean;
-
   @Column({ type: 'enum', enum: UserRole, default: UserRole.STUDENT })
   user_role: UserRole;
+
+  @Column()
+  hashed_password: string;
 }

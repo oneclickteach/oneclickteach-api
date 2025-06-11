@@ -1,21 +1,22 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 import {
   IsBoolean,
   IsEmail,
   IsEnum,
-  IsNotEmpty,
   IsOptional,
   IsString,
 } from 'class-validator';
-import { Gender, UserRole } from 'src/common/enums/user.enum';
+import { Gender, UserRole } from 'src/common';
+import { AbstractGetDto } from 'src/common/dto/abstract-get.dto';
 
-export class CreateUserDto {
+export class GetUserDto extends AbstractGetDto {
   @ApiProperty({
     example: 'mahdad.ghasemian@gmail.com',
     required: false,
   })
   @IsEmail()
-  @IsNotEmpty()
+  @Expose()
   email?: string;
 
   @ApiProperty({
@@ -23,6 +24,7 @@ export class CreateUserDto {
     required: true,
   })
   @IsBoolean()
+  @Expose()
   email_is_verified?: boolean;
 
   @ApiProperty({
@@ -30,6 +32,7 @@ export class CreateUserDto {
     required: true,
   })
   @IsString()
+  @Expose()
   mobile_phone?: string;
 
   @ApiProperty({
@@ -37,6 +40,7 @@ export class CreateUserDto {
     required: true,
   })
   @IsBoolean()
+  @Expose()
   mobile_phone_is_verified?: boolean;
 
   @ApiProperty({
@@ -45,6 +49,7 @@ export class CreateUserDto {
   })
   @IsString()
   @IsOptional()
+  @Expose()
   first_name?: string;
 
   @ApiProperty({
@@ -53,6 +58,7 @@ export class CreateUserDto {
   })
   @IsString()
   @IsOptional()
+  @Expose()
   last_name?: string;
 
   @ApiProperty({
@@ -62,6 +68,7 @@ export class CreateUserDto {
   })
   @IsString()
   @IsOptional()
+  @Expose()
   avatar?: string;
 
   @ApiProperty({
@@ -70,6 +77,7 @@ export class CreateUserDto {
     required: true,
   })
   @IsEnum(Gender)
+  @Expose()
   gender?: Gender;
 
   @ApiProperty({
@@ -78,5 +86,6 @@ export class CreateUserDto {
     required: true,
   })
   @IsEnum(UserRole)
+  @Expose()
   user_role?: UserRole;
 }

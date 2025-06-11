@@ -9,51 +9,49 @@ import {
 } from 'class-validator';
 import { Gender, UserRole } from 'src/common/enums/user.enum';
 
-export class CreateUserDto {
+export class CreateNewUserDto {
   @ApiProperty({
     example: 'mahdad.ghasemian@gmail.com',
-    required: false,
+    required: true,
   })
   @IsEmail()
   @IsNotEmpty()
-  email?: string;
+  email: string;
 
   @ApiProperty({
     type: Boolean,
     required: true,
   })
   @IsBoolean()
-  email_is_verified?: boolean;
+  email_is_verified: boolean;
 
   @ApiProperty({
     example: '+989129632744',
     required: true,
   })
   @IsString()
-  mobile_phone?: string;
+  mobile_phone: string;
 
   @ApiProperty({
     type: Boolean,
     required: true,
   })
   @IsBoolean()
-  mobile_phone_is_verified?: boolean;
+  mobile_phone_is_verified: boolean;
 
   @ApiProperty({
     example: 'Mahdad',
-    required: false,
+    required: true,
   })
   @IsString()
-  @IsOptional()
-  first_name?: string;
+  first_name: string;
 
   @ApiProperty({
     example: 'Ghasemian',
-    required: false,
+    required: true,
   })
   @IsString()
-  @IsOptional()
-  last_name?: string;
+  last_name: string;
 
   @ApiProperty({
     type: String,
@@ -79,4 +77,10 @@ export class CreateUserDto {
   })
   @IsEnum(UserRole)
   user_role?: UserRole;
+
+  @ApiProperty({
+    required: true,
+  })
+  @IsString()
+  hashed_password: string;
 }
