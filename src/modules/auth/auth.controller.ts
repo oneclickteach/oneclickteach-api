@@ -10,7 +10,7 @@ import { GetUserDto } from './dto/get-user.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('signup')
   @Serialize(AuthDto)
@@ -40,6 +40,6 @@ export class AuthController {
     type: GetUserDto,
   })
   async getUserProfile(@CurrentUser() user: UserInterface) {
-    return this.authService.getProfile(user.id);
+    return this.authService.getProfile(user);
   }
 }
