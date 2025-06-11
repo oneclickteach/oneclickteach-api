@@ -3,6 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
 import { TokenPayloadInterface } from '../interfaces/token-payload.interface';
+import { Request } from 'express';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -12,7 +13,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
             throw new Error('JWT_SECRET environment variable is not defined');
         }
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: ExtractJwt.fromExtractors([
+                // Custom extractor to read from cookie
+                (req: Request) => {
+                    return req?.cookies?.Authentication || null;
+                },
+                // Fallback: from Authorization header
+                ExtractJwt.fromAuthHeaderAsBearerToken(),
+
+            ]),
             ignoreExpiration: false,
             secretOrKey: jwtSecret,
         });

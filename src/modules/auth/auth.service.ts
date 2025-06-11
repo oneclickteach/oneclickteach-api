@@ -7,6 +7,7 @@ import { TokenPayloadInterface } from './interfaces/token-payload.interface';
 import { ConfigService } from '@nestjs/config';
 import { UserRole } from 'src/common/enums/user.enum';
 import { UserInterface } from 'src/common';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) { }
 
-  async signup(signupDto: SignupDto) {
+  async signup(signupDto: SignupDto, response: Response) {
     const { email, password, mobile_phone, first_name, last_name } = signupDto;
     const hashedPassword = await createHash(password);
 
@@ -31,12 +32,16 @@ export class AuthService {
       user_role: UserRole.STUDENT,
     });
 
-    return this.login(user);
+    return this.login(user, response);
   }
 
-  async login(user: UserInterface) {
-    const access_token = await this.authenticate(user.id, user.user_role);
+  async login(user: UserInterface, response: Response) {
+    const access_token = await this.authenticate(user.id, user.user_role, response);
     return { access_token, user };
+  }
+
+  async logout(response: Response) {
+    return this.unauthenticate(response);
   }
 
   async getProfile({ id }: UserInterface) {
@@ -67,7 +72,7 @@ export class AuthService {
     }
   }
 
-  private async authenticate(id: string, user_role: string): Promise<string> {
+  private async authenticate(id: string, user_role: string, response: Response): Promise<string> {
     const tokenPayloadInterface: TokenPayloadInterface = {
       id,
       user_role,
@@ -79,6 +84,28 @@ export class AuthService {
 
     const token = this.jwtService.sign(tokenPayloadInterface, { expiresIn: expiration_in_seconds });
 
+    response.cookie('Authentication', token, {
+      httpOnly: true,
+      // secure: true,
+      secure: false,
+      // sameSite: 'strict',
+      sameSite: 'lax',
+      maxAge: expiration_in_seconds * 1000,
+    });
+
     return token;
+  }
+
+  private async unauthenticate(response: Response) {
+    response.cookie('Authentication', '', {
+      httpOnly: true,
+      // secure: true,
+      secure: false,
+      // sameSite: 'strict',
+      sameSite: 'lax',
+      maxAge: 0,
+    });
+
+    return;
   }
 }

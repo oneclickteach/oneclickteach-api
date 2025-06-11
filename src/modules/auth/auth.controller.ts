@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards, Body, Request, Get } from '@nestjs/common';
+import { Controller, Post, UseGuards, Body, Request, Get, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard, LocalAuthGuard } from 'src/common/guards';
 import { SignupDto } from './dto/signup.dto';
@@ -7,6 +7,7 @@ import { CurrentUser, Serialize, UserInterface } from 'src/common';
 import { AuthDto } from './dto/auth.dto';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { GetUserDto } from './dto/get-user.dto';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -17,8 +18,8 @@ export class AuthController {
   @ApiOkResponse({
     type: AuthDto,
   })
-  async signup(@Body() signupDto: SignupDto) {
-    return this.authService.signup(signupDto);
+  async signup(@Body() signupDto: SignupDto, @Res({ passthrough: true }) response: Response) {
+    return this.authService.signup(signupDto, response);
   }
 
   @Post('login')
@@ -27,8 +28,17 @@ export class AuthController {
   @ApiOkResponse({
     type: AuthDto,
   })
-  async login(@Body() _loginDto: LoginDto, @Request() req) {
-    return this.authService.login(req.user);
+  async login(@Body() _loginDto: LoginDto, @Request() req, @Res({ passthrough: true }) response: Response) {
+    return this.authService.login(req.user, response);
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  @ApiOkResponse({
+    type: AuthDto,
+  })
+  async logout(@Request() req, @Res({ passthrough: true }) response: Response) {
+    return this.authService.logout(response);
   }
 
   @Get('profile')
