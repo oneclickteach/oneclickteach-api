@@ -37,6 +37,7 @@ export class AuthService {
 
   async login(user: UserInterface, response: Response) {
     const access_token = await this.authenticate(user.id, user.user_role, response);
+    
     return { access_token, user };
   }
 
@@ -86,9 +87,7 @@ export class AuthService {
 
     response.cookie('Authentication', token, {
       httpOnly: true,
-      // secure: true,
-      secure: false,
-      // sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: expiration_in_seconds * 1000,
     });
@@ -97,13 +96,9 @@ export class AuthService {
   }
 
   private async unauthenticate(response: Response) {
-    response.cookie('Authentication', '', {
-      httpOnly: true,
-      // secure: true,
-      secure: false,
-      // sameSite: 'strict',
-      sameSite: 'lax',
-      maxAge: 0,
+    response.clearCookie('Authentication', {
+      path: '/',
+      domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : undefined
     });
 
     return;
