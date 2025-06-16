@@ -9,7 +9,7 @@ export class AbstractGetDto {
   })
   @IsString()
   @Expose()
-  id?: string;
+  id: string;
 
   @ApiProperty({
     type: Date,
