@@ -1,24 +1,24 @@
+# Base
 FROM node:20-alpine AS base
 WORKDIR /app
 RUN npm install -g pnpm@latest
 
-# Development
-FROM base AS development
+# Dependencies layer (to optimize cache)
+FROM base AS deps
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
+
+# Build stage
+FROM deps AS builder
 COPY . .
 RUN pnpm run build
 
 # Production
-FROM base AS production
-COPY package*.json pnpm-lock.yaml ./
-RUN pnpm install --production
-COPY . .
-RUN pnpm run build
+FROM node:20-alpine AS production
+WORKDIR /app
+RUN npm install -g pnpm@latest
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY package.json ./
 
-# Production Alpine
-FROM base AS production-alpine
-COPY package*.json pnpm-lock.yaml ./
-RUN pnpm install --production
-COPY . .
-RUN pnpm run build
+CMD ["node", "dist/main.js"]
