@@ -1,12 +1,14 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard, Serialize } from 'src/common';
 import { ApiOkPaginatedResponse, ApiPaginationQuery, Paginate, PaginateQuery } from 'nestjs-paginate';
 import { GetUserDto } from './dto/get-user.dto';
 import { USER_PAGINATION_CONFIG } from './pagination-config';
 import { ListUserDto } from './dto/list-user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('users')
+@ApiTags('Users')
+@Controller('api/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 

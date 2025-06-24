@@ -9,7 +9,8 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { GetUserDto } from './dto/get-user.dto';
 import { Response } from 'express';
 
-@Controller('auth')
+@ApiTags('Auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 

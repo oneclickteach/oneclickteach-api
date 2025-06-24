@@ -49,7 +49,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));
 
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
 
   await app.listen(configService.get<number>('HTTP_PORT', 3000));
 }

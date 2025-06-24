@@ -10,8 +10,10 @@ import { UpdateSocialLinksDto } from './dto/update-social-links.dto';
 import { UpdateTestimonialsDto } from './dto/update-testimonials.dto';
 import { UpdateResourcesDto } from './dto/update-resources.dto';
 import { UpdateSchedulingDto } from './dto/update-scheduling.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('settings')
+@ApiTags('Settings')
+@Controller('api/settings')
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) { }
 
