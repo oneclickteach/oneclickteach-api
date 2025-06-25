@@ -13,7 +13,7 @@ import { UpdateSchedulingDto } from './dto/update-scheduling.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Settings')
-@Controller('api/settings')
+@Controller('settings')
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) { }
 

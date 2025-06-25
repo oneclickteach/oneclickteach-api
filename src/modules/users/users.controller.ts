@@ -8,7 +8,7 @@ import { ListUserDto } from './dto/list-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Users')
-@Controller('api/users')
+@Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) { }
 

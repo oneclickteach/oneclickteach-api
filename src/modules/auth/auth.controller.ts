@@ -10,7 +10,7 @@ import { GetUserDto } from './dto/get-user.dto';
 import { Response } from 'express';
 
 @ApiTags('Auth')
-@Controller('api/auth')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
