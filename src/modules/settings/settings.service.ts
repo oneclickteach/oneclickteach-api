@@ -12,17 +12,19 @@ export class SettingsService {
     try {
       const setting = await this.settingsRepository.findOne({});
       return setting;
-    } catch (error) {
+    } catch (_error) {
       return DEFAULT_SETTING;
     }
   }
 
   async updateOrCreateSetting(updateSettingDto: UpdateSettingDto) {
-    let setting;
+    let setting: Setting | null = null;
 
     try {
       setting = await this.settingsRepository.findOne({});
-    } catch (error) {}
+    } catch (_error) {
+      //
+    }
 
     if (setting) {
       await this.settingsRepository.findOneAndUpdate(

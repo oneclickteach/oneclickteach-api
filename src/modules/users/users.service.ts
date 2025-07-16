@@ -3,7 +3,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { CreateNewUserDto } from './dto/create-new-user.dto';
-import { createHash } from 'src/utils/hash.utils';
 import { paginate, PaginateQuery } from 'nestjs-paginate';
 import { USER_PAGINATION_CONFIG } from './pagination-config';
 import { GetUserDto } from './dto/get-user.dto';
@@ -54,5 +53,9 @@ export class UsersService {
 
   async remove(id: string) {
     return this.usersRepository.findOneAndDelete({ id });
+  }
+
+  async countUsers() {
+    return this.usersRepository.count();
   }
 }

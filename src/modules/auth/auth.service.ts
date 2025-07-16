@@ -21,6 +21,10 @@ export class AuthService {
     const { email, password, mobile_phone, first_name, last_name } = signupDto;
     const hashedPassword = await createHash(password);
 
+    // Check if any user exists
+    const userCount = await this.usersService.countUsers();
+    const user_role = userCount === 0 ? UserRole.ADMIN : UserRole.STUDENT;
+
     const user = await this.usersService.createNewUser({
       email,
       hashed_password: hashedPassword,
@@ -29,23 +33,19 @@ export class AuthService {
       last_name,
       email_is_verified: false,
       mobile_phone_is_verified: false,
-      user_role: UserRole.STUDENT,
+      user_role,
     });
 
     return this.login(user, response);
   }
 
-  async login(user: UserInterface, response: Response) {
-    const access_token = await this.authenticate(
-      user.id,
-      user.user_role,
-      response,
-    );
+  login(user: UserInterface, response: Response) {
+    const access_token = this.authenticate(user.id, user.user_role, response);
 
     return { access_token, user };
   }
 
-  async logout(response: Response) {
+  logout(response: Response) {
     return this.unauthenticate(response);
   }
 
@@ -70,18 +70,18 @@ export class AuthService {
       }
 
       // Never return password in response
-      const { hashed_password, ...result } = user;
+      const { hashed_password: _hashed_password, ...result } = user;
       return result;
-    } catch (error) {
+    } catch (_error) {
       throw new UnauthorizedException('Invalid credentials');
     }
   }
 
-  private async authenticate(
+  private authenticate(
     id: string,
     user_role: string,
     response: Response,
-  ): Promise<string> {
+  ): string {
     const tokenPayloadInterface: TokenPayloadInterface = {
       id,
       user_role,
@@ -108,7 +108,7 @@ export class AuthService {
     return token;
   }
 
-  private async unauthenticate(response: Response) {
+  private unauthenticate(response: Response) {
     response.clearCookie('Authentication', {
       path: '/',
       domain:
