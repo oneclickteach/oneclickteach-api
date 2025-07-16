@@ -15,7 +15,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   async signup(signupDto: SignupDto, response: Response) {
     const { email, password, mobile_phone, first_name, last_name } = signupDto;
@@ -36,8 +36,12 @@ export class AuthService {
   }
 
   async login(user: UserInterface, response: Response) {
-    const access_token = await this.authenticate(user.id, user.user_role, response);
-    
+    const access_token = await this.authenticate(
+      user.id,
+      user.user_role,
+      response,
+    );
+
     return { access_token, user };
   }
 
@@ -73,17 +77,26 @@ export class AuthService {
     }
   }
 
-  private async authenticate(id: string, user_role: string, response: Response): Promise<string> {
+  private async authenticate(
+    id: string,
+    user_role: string,
+    response: Response,
+  ): Promise<string> {
     const tokenPayloadInterface: TokenPayloadInterface = {
       id,
       user_role,
     };
 
-    const expiration_in_seconds = this.configService.get<number>('JWT_EXPIRATION', 60 * 60); // Default to 1 hour
+    const expiration_in_seconds = this.configService.get<number>(
+      'JWT_EXPIRATION',
+      60 * 60,
+    ); // Default to 1 hour
     const expires = new Date();
     expires.setSeconds(expires.getSeconds() + expiration_in_seconds);
 
-    const token = this.jwtService.sign(tokenPayloadInterface, { expiresIn: expiration_in_seconds });
+    const token = this.jwtService.sign(tokenPayloadInterface, {
+      expiresIn: expiration_in_seconds,
+    });
 
     response.cookie('Authentication', token, {
       httpOnly: true,
@@ -98,7 +111,10 @@ export class AuthService {
   private async unauthenticate(response: Response) {
     response.clearCookie('Authentication', {
       path: '/',
-      domain: process.env.NODE_ENV === 'production' ? process.env.COOKIE_DOMAIN : undefined
+      domain:
+        process.env.NODE_ENV === 'production'
+          ? process.env.COOKIE_DOMAIN
+          : undefined,
     });
 
     return;

@@ -38,7 +38,9 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.enableCors({
-    origin: configService.get<string>('CORS_ORIGINS', 'http://localhost:3000').split(','),
+    origin: configService
+      .get<string>('CORS_ORIGINS', 'http://localhost:3000')
+      .split(','),
     credentials: true,
     methods: 'GET,HEAD,PATCH,POST,DELETE',
     optionsSuccessStatus: 204,

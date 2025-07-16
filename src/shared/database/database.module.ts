@@ -17,8 +17,10 @@ export class DatabaseModule {
             database: configService.getOrThrow('DATABASE_NAME'),
             username: configService.getOrThrow('DATABASE_USER'),
             password: configService.getOrThrow('DATABASE_PASSWORD'),
-            synchronize:
-              configService.getOrThrow<boolean>('DATABASE_SYNCHRONIZE', true),
+            synchronize: configService.getOrThrow<boolean>(
+              'DATABASE_SYNCHRONIZE',
+              true,
+            ),
             autoLoadEntities: configService.getOrThrow<boolean>(
               'DATABASE_AUTO_LOAD_ENTITIES',
               true,
@@ -47,8 +49,10 @@ export class DatabaseModule {
               database: database,
               username: configService.getOrThrow('DATABASE_USER'),
               password: configService.getOrThrow('DATABASE_PASSWORD'),
-              synchronize:
-                configService.getOrThrow<boolean>('DATABASE_SYNCHRONIZE', true),
+              synchronize: configService.getOrThrow<boolean>(
+                'DATABASE_SYNCHRONIZE',
+                true,
+              ),
               autoLoadEntities: configService.getOrThrow<boolean>(
                 'DATABASE_AUTO_LOAD_ENTITIES',
                 true,

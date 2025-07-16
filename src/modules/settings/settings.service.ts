@@ -6,9 +6,7 @@ import { Setting } from './entities/setting.entity';
 
 @Injectable()
 export class SettingsService {
-  constructor(
-    private readonly settingsRepository: SettingsRepository,
-  ) { }
+  constructor(private readonly settingsRepository: SettingsRepository) {}
 
   async getSetting() {
     try {
@@ -24,11 +22,13 @@ export class SettingsService {
 
     try {
       setting = await this.settingsRepository.findOne({});
-    } catch (error) {
-    }
+    } catch (error) {}
 
     if (setting) {
-      await this.settingsRepository.findOneAndUpdate({ id: setting.id }, updateSettingDto)
+      await this.settingsRepository.findOneAndUpdate(
+        { id: setting.id },
+        updateSettingDto,
+      );
     } else {
       const setting = Object.assign(new Setting({}), updateSettingDto);
       await this.settingsRepository.save(setting);

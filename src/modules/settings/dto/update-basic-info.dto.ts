@@ -13,7 +13,7 @@ export class UpdateBasicInfoDto {
   @ApiProperty({
     type: String,
     required: true,
-    example: 'Passionate Language Educator | English & Spanish Specialist'
+    example: 'Passionate Language Educator | English & Spanish Specialist',
   })
   @IsString()
   tagline: string;
@@ -28,7 +28,8 @@ export class UpdateBasicInfoDto {
   @ApiProperty({
     type: String,
     required: true,
-    example: "With over a decade of experience, I craft engaging and effective learning journeys for students of all ages. My approach is student-centered, focusing on building confidence and fluency. Let's explore the world of languages together!"
+    example:
+      "With over a decade of experience, I craft engaging and effective learning journeys for students of all ages. My approach is student-centered, focusing on building confidence and fluency. Let's explore the world of languages together!",
   })
   @IsString()
   bio_summary: string;

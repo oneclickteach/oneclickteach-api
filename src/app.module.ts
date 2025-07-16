@@ -57,4 +57,4 @@ import { redisStore } from 'cache-manager-redis-yet';
     SettingsModule,
   ],
 })
-export class AppModule { }
+export class AppModule {}

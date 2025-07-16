@@ -1,1 +1,1 @@
-export * from './hash.utils'
+export * from './hash.utils';

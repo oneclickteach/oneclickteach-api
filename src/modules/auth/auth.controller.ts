@@ -1,4 +1,12 @@
-import { Controller, Post, UseGuards, Body, Request, Get, Res } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Body,
+  Request,
+  Get,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard, LocalAuthGuard } from 'src/common/guards';
 import { SignupDto } from './dto/signup.dto';
@@ -12,14 +20,17 @@ import { Response } from 'express';
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
   @Serialize(AuthDto)
   @ApiOkResponse({
     type: AuthDto,
   })
-  async signup(@Body() signupDto: SignupDto, @Res({ passthrough: true }) response: Response) {
+  async signup(
+    @Body() signupDto: SignupDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     return this.authService.signup(signupDto, response);
   }
 
@@ -29,7 +40,11 @@ export class AuthController {
   @ApiOkResponse({
     type: AuthDto,
   })
-  async login(@Body() _loginDto: LoginDto, @Request() req, @Res({ passthrough: true }) response: Response) {
+  async login(
+    @Body() _loginDto: LoginDto,
+    @Request() req,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     return this.authService.login(req.user, response);
   }
 

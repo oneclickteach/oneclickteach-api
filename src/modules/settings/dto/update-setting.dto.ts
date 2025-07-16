@@ -17,7 +17,7 @@ export class UpdateSettingDto {
   @ApiProperty({
     type: String,
     required: true,
-    example: 'Passionate Language Educator | English & Spanish Specialist'
+    example: 'Passionate Language Educator | English & Spanish Specialist',
   })
   @IsString()
   tagline: string;
@@ -32,7 +32,8 @@ export class UpdateSettingDto {
   @ApiProperty({
     type: String,
     required: true,
-    example: "With over a decade of experience, I craft engaging and effective learning journeys for students of all ages. My approach is student-centered, focusing on building confidence and fluency. Let's explore the world of languages together!"
+    example:
+      "With over a decade of experience, I craft engaging and effective learning journeys for students of all ages. My approach is student-centered, focusing on building confidence and fluency. Let's explore the world of languages together!",
   })
   @IsString()
   bio_summary: string;
@@ -40,7 +41,8 @@ export class UpdateSettingDto {
   @ApiProperty({
     type: String,
     required: false,
-    example: "I believe language learning should be an immersive and enjoyable adventure. My methodology integrates communicative approaches with cultural insights, ensuring students not only learn the language but also appreciate its context. I foster a supportive environment where mistakes are learning opportunities, and progress is celebrated.",
+    example:
+      'I believe language learning should be an immersive and enjoyable adventure. My methodology integrates communicative approaches with cultural insights, ensuring students not only learn the language but also appreciate its context. I foster a supportive environment where mistakes are learning opportunities, and progress is celebrated.',
   })
   @IsString()
   teaching_philosophy: string;

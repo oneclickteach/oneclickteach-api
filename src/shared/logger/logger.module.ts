@@ -28,7 +28,7 @@ export class LoggerModule {
         PinoLoggerModule.forRootAsync({
           imports: [ConfigModule],
           useFactory: async (configService: ConfigService) => {
-            const isDev = process.env.NODE_ENV === "development";
+            const isDev = process.env.NODE_ENV === 'development';
 
             return {
               pinoHttp: {
@@ -43,7 +43,8 @@ export class LoggerModule {
                     },
                   },
                 }),
-                level: configService.get<LogLevel>('LOG_LEVEL') || LogLevel.Info,
+                level:
+                  configService.get<LogLevel>('LOG_LEVEL') || LogLevel.Info,
                 customSuccessMessage: () => '',
                 customAttributeKeys: {
                   req: 'request',
@@ -52,7 +53,7 @@ export class LoggerModule {
                   responseTime: 'response_time',
                 },
               },
-            }
+            };
           },
           inject: [ConfigService],
         }),

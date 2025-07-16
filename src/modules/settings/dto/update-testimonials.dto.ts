@@ -5,7 +5,8 @@ import { IsArray, IsString } from 'class-validator';
 export class UpdateTestimonialDto {
   @ApiProperty({
     type: String,
-    example: 'I had the pleasure of working with Dr. Evelyn Reed, and I must say, she is an absolute gem. Her expertise in language education is evident in every lesson she conducts. She is not only knowledgeable but also patient and supportive, making the learning process enjoyable and effective.',
+    example:
+      'I had the pleasure of working with Dr. Evelyn Reed, and I must say, she is an absolute gem. Her expertise in language education is evident in every lesson she conducts. She is not only knowledgeable but also patient and supportive, making the learning process enjoyable and effective.',
     required: true,
   })
   @IsString()
@@ -19,7 +20,6 @@ export class UpdateTestimonialDto {
   @IsString()
   student_name: string;
 }
-
 
 export class UpdateTestimonialsDto {
   @ApiProperty({

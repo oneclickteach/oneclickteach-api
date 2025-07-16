@@ -1,5 +1,3 @@
-import { CreateLanguageDto } from "./create-language.dto";
+import { CreateLanguageDto } from './create-language.dto';
 
-export class UpdateLanguageDto extends CreateLanguageDto {
-
-}
+export class UpdateLanguageDto extends CreateLanguageDto {}

@@ -1,9 +1,9 @@
 export enum LanguageDirection {
-    LTR = 'ltr',
-    RTL = 'rtl',
+  LTR = 'ltr',
+  RTL = 'rtl',
 }
 
 export enum LanguageCode {
-    EN = 'en',
-    FA = 'fa',
+  EN = 'en',
+  FA = 'fa',
 }

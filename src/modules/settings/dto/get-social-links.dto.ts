@@ -20,7 +20,7 @@ export class GetSocialLinksDto extends AbstractGetDto {
   })
   @IsString()
   @Expose()
-  twitter?: string
+  twitter?: string;
 
   @ApiProperty({
     type: String,
@@ -29,7 +29,7 @@ export class GetSocialLinksDto extends AbstractGetDto {
   })
   @IsString()
   @Expose()
-  telegram?: string
+  telegram?: string;
 
   @ApiProperty({
     type: String,
@@ -38,5 +38,5 @@ export class GetSocialLinksDto extends AbstractGetDto {
   })
   @IsString()
   @Expose()
-  whatsapp?: string
+  whatsapp?: string;
 }

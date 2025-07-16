@@ -15,7 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Settings')
 @Controller('settings')
 export class SettingsController {
-  constructor(private readonly settingsService: SettingsService) { }
+  constructor(private readonly settingsService: SettingsService) {}
 
   @Get()
   @Serialize(GetSettingDto)
@@ -41,7 +41,9 @@ export class SettingsController {
     type: GetSettingDto,
   })
   updateBasicInfo(@Body() updateBasicInfoDto: UpdateBasicInfoDto) {
-    return this.settingsService.updateOrCreateSetting(updateBasicInfoDto as UpdateSettingDto);
+    return this.settingsService.updateOrCreateSetting(
+      updateBasicInfoDto as UpdateSettingDto,
+    );
   }
 
   @Patch('teaching-philosophy')
@@ -49,8 +51,12 @@ export class SettingsController {
   @ApiOkResponse({
     type: GetSettingDto,
   })
-  updateTeachingPhilosophy(@Body() updateTeachingPhilosophyDto: UpdateTeachingPhilosophyDto) {
-    return this.settingsService.updateOrCreateSetting(updateTeachingPhilosophyDto as UpdateSettingDto);
+  updateTeachingPhilosophy(
+    @Body() updateTeachingPhilosophyDto: UpdateTeachingPhilosophyDto,
+  ) {
+    return this.settingsService.updateOrCreateSetting(
+      updateTeachingPhilosophyDto as UpdateSettingDto,
+    );
   }
 
   @Patch('social-links')
@@ -59,7 +65,9 @@ export class SettingsController {
     type: GetSettingDto,
   })
   updateSocialLinks(@Body() updateSocialLinksDto: UpdateSocialLinksDto) {
-    return this.settingsService.updateOrCreateSetting(updateSocialLinksDto as UpdateSettingDto);
+    return this.settingsService.updateOrCreateSetting(
+      updateSocialLinksDto as UpdateSettingDto,
+    );
   }
 
   @Patch('testimonials')
@@ -68,7 +76,9 @@ export class SettingsController {
     type: GetSettingDto,
   })
   updateTestimonials(@Body() updateTestimonialsDto: UpdateTestimonialsDto) {
-    return this.settingsService.updateOrCreateSetting(updateTestimonialsDto as UpdateSettingDto);
+    return this.settingsService.updateOrCreateSetting(
+      updateTestimonialsDto as UpdateSettingDto,
+    );
   }
 
   @Patch('resources')
@@ -77,7 +87,9 @@ export class SettingsController {
     type: GetSettingDto,
   })
   updateResources(@Body() updateResourcesDto: UpdateResourcesDto) {
-    return this.settingsService.updateOrCreateSetting(updateResourcesDto as UpdateSettingDto);
+    return this.settingsService.updateOrCreateSetting(
+      updateResourcesDto as UpdateSettingDto,
+    );
   }
 
   @Patch('scheduling-url')
@@ -86,6 +98,8 @@ export class SettingsController {
     type: GetSettingDto,
   })
   updateSchedulingUrl(@Body() updateSchedulingDto: UpdateSchedulingDto) {
-    return this.settingsService.updateOrCreateSetting(updateSchedulingDto as UpdateSettingDto);
-  } 
+    return this.settingsService.updateOrCreateSetting(
+      updateSchedulingDto as UpdateSettingDto,
+    );
+  }
 }

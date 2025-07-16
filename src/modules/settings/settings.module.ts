@@ -23,6 +23,6 @@ import { Language } from './entities/language.entity';
   ],
   controllers: [SettingsController],
   providers: [SettingsService, SettingsRepository],
-  exports: [SettingsService]
+  exports: [SettingsService],
 })
-export class SettingsModule { }
+export class SettingsModule {}

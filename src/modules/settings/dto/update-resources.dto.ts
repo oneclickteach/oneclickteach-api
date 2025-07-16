@@ -14,7 +14,7 @@ export class UpdateResourceDto {
   @ApiProperty({
     type: String,
     required: true,
-    example: 'A handy guide covering common Spanish verb conjugations.'
+    example: 'A handy guide covering common Spanish verb conjugations.',
   })
   @IsString()
   description: string;
@@ -30,7 +30,7 @@ export class UpdateResourceDto {
   @ApiProperty({
     type: String,
     required: true,
-    example: 'download'
+    example: 'download',
   })
   @IsString()
   type: string;

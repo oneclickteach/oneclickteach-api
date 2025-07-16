@@ -19,7 +19,7 @@ export class UpdateSocialLinkDto {
   })
   @IsString()
   @IsOptional()
-  twitter?: string
+  twitter?: string;
 
   @ApiProperty({
     type: String,
@@ -28,7 +28,7 @@ export class UpdateSocialLinkDto {
   })
   @IsString()
   @IsOptional()
-  telegram?: string
+  telegram?: string;
 
   @ApiProperty({
     type: String,
@@ -37,7 +37,7 @@ export class UpdateSocialLinkDto {
   })
   @IsString()
   @IsOptional()
-  whatsapp: string
+  whatsapp: string;
 }
 
 export class UpdateSocialLinksDto {
@@ -56,4 +56,3 @@ export class UpdateSocialLinksDto {
   @ValidateNested()
   social_links: UpdateSocialLinkDto;
 }
-
