@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsEmail, IsOptional, IsString } from 'class-validator';
 import { UpdateTestimonialDto } from './update-testimonials.dto';
 import { UpdateResourceDto } from './update-resources.dto';
 import { UpdateSocialLinkDto } from './update-social-links.dto';
@@ -51,8 +51,7 @@ export class UpdateSettingDto {
     example: 'Ghasemian',
     required: false,
   })
-  @IsString()
-  @ValidateNested()
+  @IsEmail()
   contact_email: string;
 
   @ApiProperty({
